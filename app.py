@@ -60,10 +60,9 @@ with tabs[0]:
         marca_filtro = st.radio("Filtrar por Marca de Máquina:", ["Todas", "Bühler", "IMP.A.C.", "Tecnipes"], horizontal=True)
         if marca_filtro != "Todas":                                        
             df = df[df["maquina"].astype(str).str.contains(marca_filtro, case=False, na=False)]
-
-            if buscar:
+        if buscar:
             df = df[df.apply(lambda r: r.astype(str).str.contains(buscar, case=False).any(), axis=1)]
-        st.dataframe(df[["Estado", "nombre_local", "maquina", "codigo_fabrica", "stock"]], use_container_width=True)
+            st.dataframe(df[["Estado", "nombre_local", "maquina", "codigo_fabrica", "stock"]], use_container_width=True)
 
 # 2. REGISTRAR SALIDA (Disponible para Admin y Operario)
 tab_salida = tabs[2] if u["rol"] == "admin" else tabs[1]
