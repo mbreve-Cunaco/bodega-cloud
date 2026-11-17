@@ -24,9 +24,10 @@ def procesar_pdf_cloud(bytes_pdf):
     res, _ = ocr(doc[0].get_pixmap(dpi=250).tobytes("png"))
     if not res: return 0
     
-    lineas = [l.strip() for l in res]
+    lineas = [l[1].strip() for l in res]
     m_oc = re.search(r"ORDEN\s*DE\s*COMPRA\s*N[°º]?\s*([A-Z0-9\-]+)", "\n".join(lineas), re.I)
     num_oc = m_oc.group(1) if m_oc else "S/N"
+
     
     prov = "Desconocido"
     for i, l in enumerate(lineas):
@@ -43,7 +44,7 @@ def procesar_pdf_cloud(bytes_pdf):
                 if e.replace(".", "").replace(",", "") == "8000" or "PARA UNA RECEPCION" in e.upper(): break
                 if e.replace(",", "").replace(".", "").isdigit(): nums.append(float(e.replace(",", "")))
                 elif len(e) > 4 and not desc: desc = e
-            if len(nums) >= 2 and nums < 500: cant = nums
+            if len(nums) >= 2 and nums[0] < 500: cant = nums[0]
             elif len(nums) >= 2 and nums[-2] > 0: cant = float(max(1, round(nums[-1] / nums[-2])))
             if desc and not any(ig in desc.upper() for ig in ignorar):
                 items.append({"cant": cant, "desc": desc})
