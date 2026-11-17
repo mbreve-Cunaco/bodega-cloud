@@ -105,8 +105,7 @@ if u["rol"] == "admin":
     with tabs[3]:
         st.subheader("✏️ Editor Rápido de Inventario (Nombres, Códigos y Mínimos)")
         st.caption("Haz doble clic en cualquier celda para editarla y luego presiona Guardar Cambios.")
-        
-        df_edit = pd.DataFrame(datos)[["id", "nombre_local", "codigo_fabrica", "codigo_referencia", "limite_minimo", "proveedor"]]
+        df_edit = pd.DataFrame(datos)[["id", "nombre_local", "maquina", "codigo_fabrica", "codigo_referencia", "limite_minimo", "proveedor"]]
         df_modificado = st.data_editor(
             df_edit,
             disabled=["id"],  # Bloqueamos el ID para no romper la base de datos
