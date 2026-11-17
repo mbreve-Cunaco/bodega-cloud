@@ -71,8 +71,10 @@ def procesar_pdf_cloud(bytes_pdf):
         if not ok:
             # Guarda la descripción larga en codigo_fabrica y deja nombre_local limpio
             supabase.table("inventario").insert({
+                supabase.table("inventario").insert({
                 "proveedor": prov,
                 "nombre_local": "Pendiente de nombrar",
+                "maquina": "Pendiente de asignar",
                 "especificacion": "Agregado desde OC",
                 "stock": cant,
                 "ultimo_ingreso": f"+{cant} ({hoy})",
