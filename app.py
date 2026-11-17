@@ -63,8 +63,7 @@ with tabs[0]:
 
         if buscar:
             df = df[df.apply(lambda r: r.astype(str).str.contains(buscar, case=False).any(), axis=1)]
-        st.dataframe(df[["id", "Estado", "nombre_local", "codigo_fabrica", "codigo_referencia", "stock", "limite_minimo", "proveedor"]], use_container_width=True)
-
+       st.dataframe(df[[ "Estado", "nombre_local", "maquina", "codigo_fabrica", "codigo_referencia", "stock", "proveedor"]], use_container_width=True)
 # 2. REGISTRAR SALIDA (Disponible para Admin y Operario)
 tab_salida = tabs[2] if u["rol"] == "admin" else tabs[1]
 with tab_salida:
