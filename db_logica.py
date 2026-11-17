@@ -42,7 +42,9 @@ def procesar_pdf_cloud(bytes_pdf):
             cant, desc, nums = 1.0, "", []
             for e in lineas[i+1:i+6]:
                 if e.replace(".", "").replace(",", "") == "8000" or "PARA UNA RECEPCION" in e.upper(): break
-                if e.replace(",", "").replace(".", "").isdigit(): nums.append(float(e.replace(",", "")))
+                num_limpio = e.replace(",", "").replace(".", "")
+                if num_limpio.isdigit(): nums.append(float(num_limpio))
+
                 elif len(e) > 4 and not desc: desc = e
             if len(nums) >= 2 and nums[0] < 500: cant = nums[0]
             elif len(nums) >= 2 and nums[-2] > 0: cant = float(max(1, round(nums[-1] / nums[-2])))
