@@ -57,6 +57,10 @@ with tabs[0]:
                 st.download_button("⬇️ Descargar .txt", rep, file_name="Reposicion.txt")
 
         buscar = st.text_input("🔍 Buscar repuesto o código:")
+        marca_filtro = st.radio("Filtrar por Marca de Máquina:", ["Todas", "Bühler", "IMP.A.C.", "Tecnipes"], horizontal=True)
+        if marca_filtro != "Todas":                                        
+            df = df[df["maquina"].astype(str).str.contains(marca_filtro, case=False, na=False)]
+
         if buscar:
             df = df[df.apply(lambda r: r.astype(str).str.contains(buscar, case=False).any(), axis=1)]
         st.dataframe(df[["id", "Estado", "nombre_local", "codigo_fabrica", "codigo_referencia", "stock", "limite_minimo", "proveedor"]], use_container_width=True)
@@ -119,6 +123,7 @@ if u["rol"] == "admin":
                 for _, fila in df_modificado.iterrows():
                     supabase.table("inventario").update({
                         "nombre_local": str(fila["nombre_local"] or ""),
+                        "maquina": str(fila["maquina"] or ""),
                         "codigo_fabrica": str(fila["codigo_fabrica"] or ""),
                         "codigo_referencia": str(fila["codigo_referencia"] or ""),
                         "limite_minimo": float(fila["limite_minimo"] or 1),
